@@ -48,7 +48,8 @@ public class AADP_Lab_SoccerSimulator {
             try {
                 option = Integer.parseInt(sc.nextLine());
                 if (option == 1) {
-                    NewPlayer.addPlayer(sc);  
+                    NewPlayer player = new NewPlayer();
+                    player.addPlayer(sc);  
                 } else if (option == 2) {
                    FindPlayer.findPlayer(sc);
                 } else if (option == 3) {
@@ -56,6 +57,7 @@ public class AADP_Lab_SoccerSimulator {
                     int numMatches = - 1;
                     do {
                         numMatches = ValidateInt.validateInt(sc, numMatches);
+                        System.out.println(numMatches);
                     } while (numMatches < 0);
                     SimulateMatch.simulateMatches(numMatches);                   
                 } else if (option == 4) {

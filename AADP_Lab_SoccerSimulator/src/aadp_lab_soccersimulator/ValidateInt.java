@@ -15,14 +15,17 @@ public class ValidateInt {
     public static int validateInt(Scanner sc, int numMatches) {
         try {
             numMatches = Integer.parseInt(sc.nextLine()); 
+            sc.nextLine();
             if (numMatches < 1) {
                 System.out.println("Please enter a positive integer");
-            } 
-
+                
+            } else {
+                return numMatches;
+            }
         } catch (Exception e) {
             System.out.println("That is not a number. please try again!");
         }
-        return numMatches;
+        return -1;
     }
     
 }

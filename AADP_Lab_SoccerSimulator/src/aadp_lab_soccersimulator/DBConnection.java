@@ -19,16 +19,27 @@ import java.util.logging.Logger;
 public class DBConnection {
    
     private String DB_URL = "jdbc:mysql://localhost/" + dbName;
+    private Connection conn = null;
+    private Statement stmt = null;
     
-    public void connect() {
+    public DBConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
         } catch (Exception ex) {
             Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
          try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/", Constants.USER, Constants.PASS);
-            Statement stmt = conn.createStatement();
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/", Constants.USER, Constants.PASS);
+            stmt = conn.createStatement();
+            this.init();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void init() {
+         try {
+            stmt = conn.createStatement();
             stmt.execute("CREATE SCHEMA IF NOT EXISTS " + Constants.dbName +";");
             stmt.execute("USE " + Constants.dbName + ";");
             for (String team : Constants.teams) {
@@ -45,6 +56,17 @@ public class DBConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    
+      
+    public void writeToDB(String command) {
+         try {
+                        conn = DriverManager.getConnection(Constants.DB_URL, Constants.USER, Constants.PASS);
+                        Statement stmt = conn.createStatement();
+                        stmt.execute(command);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }    
     }
 
        

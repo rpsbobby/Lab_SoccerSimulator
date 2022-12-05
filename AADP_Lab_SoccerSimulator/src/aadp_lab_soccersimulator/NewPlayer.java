@@ -16,7 +16,9 @@ import java.util.Scanner;
  */
 public class NewPlayer {
     
-    public static void addPlayer(Scanner sc) {
+    DBConnection conn;
+    
+    public  void addPlayer(Scanner sc) {
         boolean validTeam = false;
                     String teamName;
                     System.out.println("Please follow the instructions to enter player data.");
@@ -43,7 +45,7 @@ public class NewPlayer {
                     name = sc.nextLine();
                     System.out.println("Please enter the player's number: ");
                     do {
-                        ValidateInt.validateInt(sc, number);
+                        number = ValidateInt.validateInt(sc, number);
                     } while (number < 0);                                              
                     System.out.println("Please enter the player's date of birth: ");
                     birth = sc.nextLine();         
@@ -53,21 +55,20 @@ public class NewPlayer {
                     validPlayer = false;
                     do {
                         ValidateInt.validateInt(sc, goalsScored);
-                    } while (goalsScored < -1);     
+                    } while (goalsScored < 0);     
                     System.out.println("Please enter the player's background: ");
                     background = sc.nextLine();                          
                     System.out.println("Thank you for entering a player"); 
-                    try {
-                        Connection conn = DriverManager.getConnection(Constants.DB_URL, Constants.USER, Constants.PASS);
-                        Statement stmt = conn.createStatement();
-                        stmt.execute(
-                                String.format("INSERT INTO %s (name, number, birth, position, goalsScored, background) "
+                    
+                    this.writeToDb(String.format("INSERT INTO %s (name, number, birth, position, goalsScored, background) "
                                         + "VALUES (\"%s\", %d, \"%s\", \"%s\", %d,  \"%s\") ;",
-                                        teamName, name, number, birth, position, goalsScored, background)
-                        );
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }    
+                                        teamName, name, number, birth, position, goalsScored, background));
+              
+    }
+    
+    public void writeToDb(String str) {
+        conn = new DBConnection();
+                    conn.writeToDB(str);
     }
     
 }
