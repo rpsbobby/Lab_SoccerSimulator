@@ -7,6 +7,7 @@ package aadp_lab_soccersimulator;
 import static aadp_lab_soccersimulator.Constants.dbName;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
@@ -67,6 +68,18 @@ public class DBConnection {
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }    
+    }
+    
+    public ResultSet getFromDB(String teamName) {
+        ResultSet rs = null;
+         try {
+            conn = DriverManager.getConnection(Constants.DB_URL, Constants.USER, Constants.PASS);
+            stmt = conn.createStatement();
+            return stmt.executeQuery("SELECT * from " + teamName + ";");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }    
+         return null;
     }
 
        

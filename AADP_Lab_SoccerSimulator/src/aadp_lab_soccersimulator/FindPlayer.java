@@ -35,9 +35,8 @@ public class FindPlayer {
                         if (!validTeam) System.out.println("That is not one of the teams. Please try again!");
                     } while (!validTeam);
                     try {
-                        Connection conn = DriverManager.getConnection(Constants.DB_URL, Constants.USER, Constants.PASS);
-                        Statement stmt = conn.createStatement();
-                        ResultSet rs = stmt.executeQuery("SELECT * from " + teamName + ";");
+                        DBConnection db = new DBConnection();
+                        ResultSet rs = db.getFromDB(teamName);
                         String name;
                         int number;
                         String birth;
@@ -55,7 +54,7 @@ public class FindPlayer {
                             System.out.println("Background:");
                             System.out.println(background);
                         }
-                    } catch (SQLException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }                     
     }

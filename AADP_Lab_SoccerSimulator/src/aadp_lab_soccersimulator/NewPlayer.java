@@ -54,7 +54,7 @@ public class NewPlayer {
                     System.out.println("Please enter the number of goals the player has scored: ");
                     validPlayer = false;
                     do {
-                        ValidateInt.validateInt(sc, goalsScored);
+                        goalsScored = ValidateInt.validateInt(sc, goalsScored);
                     } while (goalsScored < 0);     
                     System.out.println("Please enter the player's background: ");
                     background = sc.nextLine();                          
