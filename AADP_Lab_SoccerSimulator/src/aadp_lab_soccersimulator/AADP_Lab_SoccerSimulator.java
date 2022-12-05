@@ -53,7 +53,7 @@ public class AADP_Lab_SoccerSimulator {
                 } else if (option == 2) {
                    FindPlayer.findPlayer(sc);
                 } else if (option == 3) {
-                    System.out.println("How many matches would you like to simulate?");
+                    promptMessage(0);
                     int numMatches = - 1;
                     do {
                         numMatches = ValidateInt.validateInt(sc, numMatches);
@@ -61,13 +61,13 @@ public class AADP_Lab_SoccerSimulator {
                     } while (numMatches < 0);
                     SimulateMatch.simulateMatches(numMatches);                   
                 } else if (option == 4) {
-                    System.out.println("Goodbye, and thank you for using the SoccerSimulator!");
+                    promptMessage(1);
                     exit = true;
                 } else {
-                    System.out.println("That is an invalid number. Please try again!");
+                    promptMessage(2);
                 }
             } catch (Exception e) {
-                System.out.println("That is not a number. Please try again!");
+                promptMessage(3);
             }         
         } while (!exit);   
     }   
@@ -79,4 +79,14 @@ public class AADP_Lab_SoccerSimulator {
         System.out.println("3. Simulate a number of matches.");
         System.out.println("4. Exit the programme."); 
     }
+    private static String promptMessage(int x) {
+        String msg[] = null;
+        msg[0] = "How many matches would you like to simulate?";
+        msg[1] = "Goodbye, and thank you for using the SoccerSimulator!";
+        msg[2] = "That is an invalid number. Please try again!";
+        msg[3] = "That is not a number. Please try again!";
+        return msg[x];
+        
+    }
+    
 }
